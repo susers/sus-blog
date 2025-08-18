@@ -1,0 +1,50 @@
+members:
+  - name: 135e2
+    role: Web
+    avatar: github
+    homepage: "https://blog.135e2.dev"
+  - name: d3d0
+    role: Web
+  - name: hardream
+    role: Web
+  - name: huangx607087
+    role: Crypto
+  - name: idawnlight
+    role: Web
+    avatar: github
+  - name: 可燃乌龙茶
+    role: Reverse
+  - name: lanpesk
+    role: PWN
+    avatar: github
+  - name: le premier homme
+    role: Reverse
+  - name: Lethephyr
+    role: Reverse
+    avatar: github
+  - name: l0ngque
+    role: PWN
+    avatar: github
+  - name: 蓝色星空
+    role: Crypto
+  - name: moeyork
+    role: MISC/Crypto
+    avatar: github
+  - name: menduogesei
+    role: Reverse
+  - name: P1umH0
+    role: Reverse
+    avatar: github
+  - name: Queen
+    role: Crypto
+  - name: 请问你有糖吗？
+    role: Web
+  - name: s1ain
+    role: Web
+  - name: ShouCheng
+    role: PWN
+  - name: slavin
+    role: PWN
+  - name: U3sug1Er1i
+    role: Reverse
+    avatar: github

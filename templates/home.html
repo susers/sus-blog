@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$" $if(dir)$ dir="$dir$" $endif$>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="author" content="$author$" />
+    <title>$blog-title$</title>
+    $for(css)$
+    <link rel="stylesheet" href="$css$" />
+    $endfor$ $for(header-includes)$ $header-includes$ $endfor$ $if(math)$ $math$
+    $endif$
+</head>
+</head>
+
+<body>
+        <table class="header">
+            <tr>
+                <td colspan="2" rowspan="2" class="width-auto" style="padding: 0;">
+		<table style="top: 0; margin: 0;">
+                    <tr>
+                        <td style="border: none;">
+                            <h1 class="title">$blog-title$</h1>
+                            $if(blog-subtitle)$<span class="subtitle">$blog-subtitle$</span>$endif$
+                        </td>
+                        <td style="border: none; vertical-align: middle; width: 0;">
+                            <img src="/logo.jpg" alt="Logo">
+                        </td>
+                    </tr>
+                </table>
+                </td>
+                <th>Author</th>
+                <td>
+                    <a href="$author-url$"><cite>$author$</cite></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td class="width-min"><time style="white-space: pre;">$blog-date$</time></td>
+            </tr>
+	</table>
+
+    <main>
+        <div class="post-list">
+	    $for(entries)$
+            <article class="post-item">
+                <h2><a href="$entries.url$">$entries.title$</a></h2>
+                $if(entries.subtitle)$<p><em>$entries.subtitle$</em></p>$endif$
+                <p>$if(entries.author)$$entries.author$ – $endif$$entries.date$</p>
+            </article>
+	    $endfor$
+        </div>
+    </main>
+
+    <div class="debug-grid"></div>
+    <script src="/index.js"></script>
+
+    <footer style="margin-top: 2rem; padding: 1rem; text-align: center; font-size: 0.9em; color: #666;">
+	<p>&copy; $author$</p>
+	<p>Theme based on <a href="https://github.com/owickstrom/the-monospace-web">The Monospace Web</a></p>
+    </footer>
+</body>
+
+</html>

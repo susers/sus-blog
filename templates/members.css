@@ -1,0 +1,35 @@
+.members {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.members td {
+  border: var(--border-thickness) solid var(--text-color);
+  padding: 0.8rem;
+  vertical-align: middle;
+}
+
+.members td.avatar {
+  width: 70px;
+  text-align: center;
+}
+
+.members img {
+  width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.members a {
+  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
+  text-decoration: underline;
+}
+
+.members p {
+  margin: 0.2rem 0 0;
+  color: var(--text-color-alt);
+  font-size: 0.9rem;
+}
