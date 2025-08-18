@@ -48,3 +48,7 @@ members:
   - name: U3sug1Er1i
     role: Reverse
     avatar: github
+  - name: rec(old)
+    role: Crypto
+    avatar: github
+    homepage: "https://rechn0.github.io/"
