@@ -41,6 +41,8 @@ members:
     role: Web
   - name: s1ain
     role: Web
+    avatar: github
+    homepage: "https://s1ain.com/"
   - name: ShouCheng
     role: PWN
   - name: slavin
