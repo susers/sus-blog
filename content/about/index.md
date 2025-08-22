@@ -26,33 +26,6 @@ SUS@2024 是：
       ![](../logo.jpg){.avatar}
     </td>
     <td>
-      <a href="#">hardream</a>
-      <p>Web</p>
-    </td>
-  </tr>
-  <tr>
-    <td class="avatar">
-      ![](../logo.jpg){.avatar}
-    </td>
-    <td>
-      <a href="#">huangx607087</a>
-      <p>Crypto</p>
-    </td>
-  </tr>
-  <tr>
-    <td class="avatar">
-      ![](https://github.com/idawnlight.png){.avatar}
-    </td>
-    <td>
-      <a href="https://github.com/idawnlight">idawnlight</a>
-      <p>Web</p>
-    </td>
-  </tr>
-  <tr>
-    <td class="avatar">
-      ![](../logo.jpg){.avatar}
-    </td>
-    <td>
       <a href="#">d3d0</a>
       <p>Web</p>
     </td>
@@ -62,7 +35,34 @@ SUS@2024 是：
       ![](../logo.jpg){.avatar}
     </td>
     <td>
-      <a href="#">可燃乌龙茶</a>
+      <a href="#">hardream</a>
+      <p>Web</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="avatar">
+      ![](https://github.com/huangx607087.png){.avatar}
+    </td>
+    <td>
+      <a href="https://huangx607087.online/">huangx607087</a>
+      <p>Crypto</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="avatar">
+      ![](https://github.com/idawnlight.png){.avatar}
+    </td>
+    <td>
+      <a href="https://idawnlight.com/">idawnlight</a>
+      <p>Web ★ Honoral Member</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="avatar">
+      ![](https://github.com/lixiao189.png){.avatar}
+    </td>
+    <td>
+      <a href="https://blog.node189.top/">可燃乌龙茶</a>
       <p>Reverse</p>
     </td>
   </tr>
@@ -71,7 +71,7 @@ SUS@2024 是：
       ![](https://github.com/lanpesk.png){.avatar}
     </td>
     <td>
-      <a href="https://github.com/lanpesk">lanpesk</a>
+      <a href="https://lanpesk.github.io/">lanpesk</a>
       <p>PWN</p>
     </td>
   </tr>
@@ -81,6 +81,15 @@ SUS@2024 是：
     </td>
     <td>
       <a href="#">le premier homme</a>
+      <p>Reverse</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="avatar">
+      ![](https://github.com/Lethephyr.png){.avatar}
+    </td>
+    <td>
+      <a href="https://github.com/Lethephyr">Lethephyr</a>
       <p>Reverse</p>
     </td>
   </tr>
@@ -107,8 +116,8 @@ SUS@2024 是：
       ![](https://github.com/moeyork.png){.avatar}
     </td>
     <td>
-      <a href="https://github.com/moeyork">moeyork</a>
-      <p>MISC/Crypto</p>
+      <a href="#">Mapl</a>
+      <p>MISC/Crypto ★ Honoral Member</p>
     </td>
   </tr>
   <tr>
@@ -126,7 +135,7 @@ SUS@2024 是：
     </td>
     <td>
       <a href="https://github.com/P1umH0">P1umH0</a>
-      <p>Reverse</p>
+      <p>Reverse ★ Honoral Member</p>
     </td>
   </tr>
   <tr>
@@ -140,19 +149,28 @@ SUS@2024 是：
   </tr>
   <tr>
     <td class="avatar">
-      ![](../logo.jpg){.avatar}
+      ![](https://github.com/candyb0x.png){.avatar}
     </td>
     <td>
-      <a href="#">请问你有糖吗？</a>
+      <a href="https://candyb0x.github.io/">请问你有糖吗？</a>
       <p>Web</p>
     </td>
   </tr>
   <tr>
     <td class="avatar">
-      ![](../logo.jpg){.avatar}
+      ![](https://github.com/Rechn0.png){.avatar}
     </td>
     <td>
-      <a href="#">s1ain</a>
+      <a href="https://rechn0.github.io/">rec</a>
+      <p>Crypto ★ Honoral Member</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="avatar">
+      ![](https://github.com/slainsama.png){.avatar}
+    </td>
+    <td>
+      <a href="https://s1ain.com/">s1ain</a>
       <p>Web</p>
     </td>
   </tr>
@@ -167,20 +185,11 @@ SUS@2024 是：
   </tr>
   <tr>
     <td class="avatar">
-      ![](../logo.jpg){.avatar}
+      ![](https://github.com/slavin-ayu.png){.avatar}
     </td>
     <td>
-      <a href="#">slavin</a>
+      <a href="https://slavin.cn/">slavin-ayu</a>
       <p>PWN</p>
-    </td>
-  </tr>
-  <tr>
-    <td class="avatar">
-      ![](https://github.com/Lethephyr.png){.avatar}
-    </td>
-    <td>
-      <a href="https://github.com/Lethephyr">Lethephyr</a>
-      <p>Reverse</p>
     </td>
   </tr>
   <tr>
