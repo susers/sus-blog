@@ -59,7 +59,7 @@ members:
     role: PWN
   - name: Slavin
     role: PWN
-    avatar: github
+    avatar: "https://github.com/slavin-ayu.png"
     homepage: "https://slavin.cn/"
   - name: U3sug1Er1i
     role: Reverse
