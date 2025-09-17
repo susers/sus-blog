@@ -188,7 +188,7 @@ SUS@2024 是：
       ![](https://github.com/slavin-ayu.png){.avatar}
     </td>
     <td>
-      <a href="https://slavin.cn/">slavin-ayu</a>
+      <a href="https://slavin.cn/">Slavin</a>
       <p>PWN</p>
     </td>
   </tr>

@@ -6,7 +6,7 @@ date: 2025-09-17
 
 又到一年 SUS 招新季！今年的“虎踞龙蟠杯”东南大学第六届大学生网络安全挑战赛（SUSCTF）依旧将于国庆期间举办。同时，今年为鼓励新生参与，特别设置新生赛道，成绩优异者同样能获得奖状及 SRTP 学分。
 
-别忘了比赛平台在 [ctf.seusus.com](https://ctf.seusus.com)，欢迎各位大师傅小师傅萌新老司机来玩 :)
+别忘了比赛平台在 [ctf.seusus.com](https://ctf.seusus.com)，QQ 群是 798322315，欢迎各位大师傅小师傅萌新老司机来玩 :)
 
 ![](./susctf-2025-poster-board.webp)
 
