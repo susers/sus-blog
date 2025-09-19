@@ -86,6 +86,8 @@ date: 2025-09-17
 
 入门推荐材料： [Hello CTF](https://hello-ctf.com/)
 
+一些其他学习资料： [SUS新生学习资料](https://pan.seu.edu.cn/#/link/DD28C3DF314AE0194B50DB20ADC2F83D)
+
 一些你可能感兴趣的在线靶场：
 
 [MoeCTF](https://ctf.xidian.edu.cn/)
