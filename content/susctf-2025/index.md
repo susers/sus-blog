@@ -93,6 +93,12 @@ date: 2025-09-17
 [MoeCTF](https://ctf.xidian.edu.cn/)
 [BUUCTF](https://buuoj.cn/)
 
+想要长期学习了解计算机基础，推荐：
+
+[Linux 101](https://101.ustclug.org/) 及 [Linux 201](https://201.ustclug.org/)
+
+[Computer Systems: A Programmer's Perspective](https://csapp.cs.cmu.edu/) [中文版](https://book.douban.com/subject/27000879/)
+
 当然，我社平台上去年的赛题依旧开放，欢迎参考、提问！
 
 ## 我不是网安/计算机专业的学生，可以参加比赛吗？
