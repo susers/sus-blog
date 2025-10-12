@@ -3186,7 +3186,7 @@ public function _destroy($destroyall=false, $preserve_objcopy=false) {
 }
 ```
 
-重点关注第 10 行到 12 行,可以发现其使用了 foreach 对$this->imagekeys进行了遍历,而$this->imagekeys 是可以通过反序列操控的变量，因此此处可以触发 getIterator（题外话:题目里对_destroy 方法进行了简单的修改,在 11 行增加了一个 is_string($file) 的判断，以此避免了通过设置$this->imagekeys 为一个对象数组，后续通过 strpos 或者 unlink 函数触发 $file 的__toString 方法来串联后续的链条，强制选手必须通过 getIterator 链来完成 RCE）
+重点关注第 10 行到 12 行,可以发现其使用了 foreach 对 `$this->imagekeys` 进行了遍历,而 `$this->imagekeys` 是可以通过反序列操控的变量，因此此处可以触发 getIterator（题外话:题目里对_destroy 方法进行了简单的修改,在 11 行增加了一个 `is_string($file)` 的判断，以此避免了通过设置 `$this->imagekeys` 为一个对象数组，后续通过 strpos 或者 unlink 函数触发 `$file` 的__toString 方法来串联后续的链条，强制选手必须通过 getIterator 链来完成 RCE）
 
 全局搜索 getIterator 方法,发现有挺多类实现了这个方法,笔者这里选用了 Give\Vendors\Symfony\Component\HttpFoundation\Session\Session 这个类
 
@@ -3207,7 +3207,7 @@ public function getBag(string $name)
 }
 ```
 
-通过 getIterator 调用$this->getAttributeBag()调用$this->getBag(参数可控)再调用$this->storage->getBag($name),此处可通过 $this->storage 触发__call 方法,全局搜索__call,有一个 ProviderForwarder 类
+通过 getIterator 调用`$this->getAttributeBag()`调用`$this->getBag`(参数可控)再调用`$this->storage->getBag($name)`,此处可通过 `$this->storage` 触发__call 方法,全局搜索__call,有一个 ProviderForwarder 类
 
 ```php
 namespace Give\TestData\Framework;
@@ -3249,7 +3249,7 @@ _    _protected function loadProvider($name)
 }
 ```
 
-这个__call 最终调用了 call_user_func_array($this->loadedProviders[$name], $arguments);这个$this->loadedProviders[$name]可控,$arguments 可控（Session 的 $this->attributeName）,可以最终实现 RCE
+这个__call 最终调用了 `call_user_func_array($this->loadedProviders[$name], $arguments);`这个`$this->loadedProviders[$name]`可控,`$arguments` 可控（Session 的 `$this->attributeName`）,可以最终实现 RCE
 
 最终 payload 如下
 
@@ -3303,7 +3303,7 @@ namespace {
 }
 ```
 
-题外话 2:写 wp 的时候发现可以精简成 3 个类就够了,因为原 CVE 提交时第二步使用的是__toString 链会导致后续调用到 call_user_func_array 时参数 $arguments 不可控,导致最后需要多调用一步最终多用一个类,因此提示里说至少要用到 4 个类。有兴趣的同学也可以自己研究一下__toString 链的触发过程和最后多的那一步怎么实现（个人觉得也是非常巧妙）可以和我讨论 hhh
+题外话 2:写 wp 的时候发现可以精简成 3 个类就够了,因为原 CVE 提交时第二步使用的是__toString 链会导致后续调用到 `call_user_func_array` 时参数 `$argument`s 不可控,导致最后需要多调用一步最终多用一个类,因此提示里说至少要用到 4 个类。有兴趣的同学也可以自己研究一下__toString 链的触发过程和最后多的那一步怎么实现（个人觉得也是非常巧妙）可以和我讨论 hhh
 
 ## easyoa
 
