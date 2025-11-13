@@ -1,8 +1,15 @@
 members:
-  - name: 135e2
+  - name: "135e2"
     role: Web
     avatar: github
     homepage: "https://blog.135e2.dev"
+  - name: a6y55
+    role: Reverse/PWN
+    avatar: github
+  - name: BIGSMATER
+    role: Reverse
+  - name: bj777
+    role: Reverse
   - name: d3d0
     role: Web
   - name: hardream
@@ -11,33 +18,38 @@ members:
     role: Crypto
     avatar: github
     homepage: "https://huangx607087.online/"
+  - name: Ko1sh1
+    role: Web
   - name: idawnlight
     role: Web ★ Honoral Member
     avatar: github
     homepage: "https://idawnlight.com/"
+  - name: illunight
+    role: Crypto/Misc
   - name: 可燃乌龙茶
     role: Reverse
     avatar: "https://github.com/lixiao189.png"
     homepage: "https://blog.node189.top/"
+  - name: laboon
+    role: N/A
   - name: lanpesk
     role: PWN
     avatar: github
     homepage: "https://lanpesk.github.io/"
   - name: le premier homme
     role: Reverse
-  - name: Lethephyr
-    role: Reverse
-    avatar: github
   - name: l0ngque
-    role: PWN
+    role: PWN ★ Honoral Member
     avatar: github
   - name: 蓝色星空
     role: Crypto
   - name: Mapl
-    role: MISC/Crypto ★ Honoral Member
+    role: Misc/Crypto ★ Honoral Member
     avatar: "https://github.com/moeyork.png"
   - name: menduogesei
     role: Reverse
+  - name: MorgenEule
+    role: Misc/AI
   - name: P1umH0
     role: Reverse ★ Honoral Member
     avatar: github
@@ -55,12 +67,17 @@ members:
     role: Web
     avatar: "https://github.com/slainsama.png"
     homepage: "https://s1ain.com/"
+  - name: sh7err
+    role: Web
   - name: ShouCheng
     role: PWN
   - name: Slavin
     role: PWN
     avatar: "https://github.com/slavin-ayu.png"
     homepage: "https://slavin.cn/"
-  - name: U3sug1Er1i
-    role: Reverse
+  - name: 依言范特西
+    role: PWN
+  - name: zysgmzb
+    role: Misc
     avatar: github
+    homepage: "https://zysgmzb.club/"
