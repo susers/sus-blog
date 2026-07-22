@@ -1,0 +1,39 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install panblog
+        run: |
+          curl -sL https://github.com/135e2/panblog/releases/latest/download/panblog.zip -o panblog.zip
+          unzip -o panblog.zip
+          install panblog /usr/local/bin
+
+      - name: Install minify
+        run: |
+          curl -sL https://github.com/tdewolff/minify/releases/latest/download/minify_linux_amd64.tar.gz | tar xz
+          install minify /usr/local/bin
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Install Python dependencies
+        run: pip install pyyaml
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: netlify deploy --prod --dir=output
