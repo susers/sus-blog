@@ -96,9 +96,10 @@ date: 2026-09-18
 
 简单来说，CTF 竞赛类似解谜游戏，通过研究题目，发掘特定的漏洞点，解决问题、拿到`flag`。
 
-入门推荐材料： [Hello CTF](https://hello-ctf.com/)
+入门推荐材料： 
 
-一些其他学习资料： [SUS新生学习资料](https://pan.seu.edu.cn/#/link/DD28C3DF314AE0194B50DB20ADC2F83D)
+[Hello CTF](https://hello-ctf.com/)
+[CTF Wiki](https://ctf-wiki.org/)
 
 一些你可能感兴趣的在线靶场：
 
