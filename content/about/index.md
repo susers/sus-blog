@@ -2,7 +2,7 @@
 comment: DO NOT MODIFY BY HAND, USE scripts/gen_members_table.py ---
 title: 关于
 subtitle: All about SUS
-date: 2005-09-01
+date: 2005-07-26
 header-includes: ['<link rel="stylesheet" href="/members.css">']
 ---
 
